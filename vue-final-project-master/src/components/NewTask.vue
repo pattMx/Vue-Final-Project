@@ -6,9 +6,13 @@ import { useTaskStore } from '../store/task.js'
 const userStore = useUserStore()
 const taskStore = useTaskStore()
 const title = ref(null)
+const description = ref(null)
 
 const clearInput = () => {
   title.value = ""
+}
+const clearInput2 = () => {
+  description.value = ""
 }
 
 async function createNewTask() {
@@ -20,23 +24,29 @@ async function createNewTask() {
     alert('could not add task')
   }
 }
+
+
 </script>
 
 <template>
-  <form
-    id="new-task"
-    @submit.prevent="createNewTask"
-  >
-    <input
-      v-model="title"
-      type="text"
-      name="new-task"
-      class="text"
-      minlength="4"
-      placeholder="New Task"
-    >
-    <button class="submit">
-      Submit
-    </button>
-  </form>
+  <div class="AddNewTask">
+    <h1 class="titleAddNT"> Add a new Task</h1>
+    <div class="w-101 flex-colum">
+      <form
+      class="new-task"
+      @submit.prevent="createNewTask">
+        <!-- <div class="form-input"> -->
+          <input
+          v-model="title"
+          type="text"
+          name="new-task"
+          class="form-inputtask"
+          minlength="4"
+          placeholder="New Task">
+          <button class="button-dark">Add</button>
+        <!-- </div> -->
+        
+      </form>      
+    </div>
+  </div>
 </template>

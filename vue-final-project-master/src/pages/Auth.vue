@@ -11,7 +11,7 @@ const signup = ref(false);
   <article class="auth">
     <SignIn v-if="!signup" />
     <SignUp v-if="signup" />
-    <nav class="buttons mt-20">
+    <div class="buttons mt-20">
       <button
         v-if="!signup"
         class="button-dark"
@@ -28,7 +28,7 @@ const signup = ref(false);
       >
         Click to Sign In
       </button>
-    </nav>
+    </div>
   </article>
 </template>
 

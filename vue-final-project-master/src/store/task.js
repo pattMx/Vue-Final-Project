@@ -19,6 +19,12 @@ export const useTaskStore = defineStore('tasks', {
         .insert([{ title: title, is_complete: false, user_id: user_id }]);
       this.fetchTasks();
     },
+    async createTaskdescription (description, user_id) {
+      await supabase
+        .from('tasks')
+        .insert([{ description: description, is_complete: false, user_id: user_id }]);
+      this.fetchTasks();
+    },
     async editTask (taskId, editedTask) {
       await supabase
         .from('tasks')

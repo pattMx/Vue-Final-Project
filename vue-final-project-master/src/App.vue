@@ -1,9 +1,15 @@
 <template>
   <section class="app-container">
-    <h1 class="white" v-if="!user">Welcome to the Vue Task App</h1>
-    <AppHeader class="app-header" v-if="user" />
+    <h1 class="white" v-if="!user">To Do App</h1>
+    <!-- <AppHeader class="app-header" v-if="user" /> -->
     <Nav class="main-nav" v-if="user" />
     <router-view class="app-main" />
+    <!-- <YourAccount class="YourAccount" v-if="user"/> -->
+    <Footer class="footer" v-if="user"/>
+    
+    <!-- <yourAccount class="YourAccount" v-if="user"/>
+    <Avatar class="Avatar" v-if="user"/> -->
+
   </section>
 </template>
 
@@ -12,9 +18,10 @@ import { onMounted } from "vue";
 import { storeToRefs } from "pinia";
 import { useRouter } from "vue-router";
 import { useUserStore } from "./store/user.js";
-
-import AppHeader from "./components/AppHeader.vue";
+// import YourAccount from "./pages/YourAccount.vue"
+import Footer from "./components/Footer.vue";
 import Nav from "./components/Nav.vue";
+// import YourAccount from "./pages/YourAccount.vue";
 
 const router = useRouter();
 
@@ -36,31 +43,5 @@ onMounted(async () => {
 </script>
 
 <style>
-.app-container {
-  display: flex;
-  flex-direction: column;
-  width: 80%;
-  margin: 0 auto;
-  justify-content: center;
-  height: 100vh;
-}
 
-.app-header {
-  grid-area: hd;
-}
-
-.app-main {
-  grid-area: main;
-  background: white;
-  margin-top: 2rem;
-}
-
-.main-nav {
-  grid-area: nav;
-}
-
-h1 {
-  grid-area: welcome;
-  text-align: center;
-}
 </style>

@@ -27,8 +27,21 @@ const updateTask = async(taskId) => {
   }
 }
 
+const updateTask1 = async(taskId) => {
+  try {
+    await taskStore.editTask1(taskId, editedTask1.value);
+    editingTask.value = null;
+  } catch (e) {
+    errorMsg.value = e.message;
+  }
+}
+
 const editTask = async (title, taskId) => {
   editedTask.value = title;
+  editingTask.value = taskId;
+}
+const editTask1 = async (description, taskId) => {
+  editedTask.value = description;
   editingTask.value = taskId;
 }
 
@@ -46,6 +59,8 @@ onMounted(async () => {
     alert('Supabase has sent an email to ${user.value.email} please click the link in this email to confirm your account')
   }
 })
+
+
 </script>
 
 <template>
@@ -54,9 +69,9 @@ onMounted(async () => {
     class="tasklist"
   >
     <header class="tasklist-header">
-      <h3 class="header-title">
+      <!-- <h3 class="header-title">
         Welcome {{ user.email }}
-      </h3>
+      </h3> -->
       <div>
         <NewTask />
       </div>
@@ -77,8 +92,11 @@ onMounted(async () => {
       v-if="tasks"
       class="tasklist-main"
     >
+    <div class="titletasks">
+      <h3>Tasks</h3>
+    </div>
       <div class="tasklist-all">
-        <h3>Tasks</h3>
+        
         <TaskItem
           v-for="task in tasks.filter(t => t.is_complete === false)"
           :id="`task-${task.id}`"
@@ -104,29 +122,38 @@ onMounted(async () => {
           </template>
           <template #buttons>
             <button
+              class="edit"
               name="edit"
               @click="editTask(task.title, task.id)"
             >
-              Edit
             </button>
+            
             <button
+              class="complete"
               name="complete"
               @click="taskStore.changeStatus(task.id, { complete: true })"
             >
-              Complete
+            
             </button>
             <button
+              class="delete"
               name="delete"
               @click="taskStore.deleteTask(task.id)"
             >
-              Delete
+              
             </button>
           </template>
         </TaskItem>
       </div>
+    </main>
 
+      <main
+      v-if="tasks"
+      class="tasklist-main"
+    >
+<h3>Completed</h3>
       <div class="tasklist-complete">
-        <h3>Completed</h3>
+        
         <TaskItem
           v-for="task in tasks.filter(t => t.is_complete === true)"
           :id="`task-${task.id}`"
@@ -152,22 +179,24 @@ onMounted(async () => {
           </template>
           <template #buttons>
             <button
+              class="edit"
               name="edit"
               @click="editTask(task.title, task.id)"
             >
-              Edit
             </button>
             <button
+              class="re-open"
               name="reopen"
               @click="taskStore.changeStatus(task.id, {complete: false })"
             >
-              re-open
+            
             </button>
             <button
+              class="delete"
               name="delete"
               @click="taskStore.deleteTask(task.id)"
             >
-              Delete
+              
             </button>
           </template>
         </TaskItem>
@@ -177,14 +206,4 @@ onMounted(async () => {
 </template>
 
 <style scoped>
-.tasklist-header {
-    border-bottom: solid 1px;
-    margin-bottom: 1rem;
-    padding: 1rem;
-}
-
-.tasklist-main {
-    display: grid;
-    gap: 1rem;
-}
 </style>
